@@ -52,9 +52,19 @@ class LivroController {
           await livro.findByIdAndDelete(id);
           res.status(200).json({ message: "Livro Deletado" });
         } catch (erro) {
-          res.status(500).json({ message: `${erro.message} - falha na atualização` });
+          res.status(500).json({ message: `${erro.message} - falha ao deletar livro` });
         }
     };
+
+    static async listarLivrosPorEdtora(res,req){
+       const editora = req.query.editora;
+       try {
+        const livrosPorEditora = await livro.find({editora: editora});
+        res.status(200).json(livrosPorEditora)
+       } catch (error) {
+        res.status(500).json({ message: `${erro.message} - falha ao buscar`});
+       }
+    }
 };
 
 export default LivroController;
